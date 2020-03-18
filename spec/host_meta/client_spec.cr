@@ -84,24 +84,24 @@ Spectator.describe HostMeta::Client do
 
     it "returns a result" do
       with_json do
-        HostMeta::Client.query("example.com").should be_a(HostMeta::Result)
+        expect(HostMeta::Client.query("example.com")).to be_a(HostMeta::Result)
       end
     end
 
     it "returns a result" do
       with_xml do
-        HostMeta::Client.query("example.com").should be_a(HostMeta::Result)
+        expect(HostMeta::Client.query("example.com")).to be_a(HostMeta::Result)
       end
     end
 
     it "makes an HTTP request to the host domain" do
       HostMeta::Client.query("example.com")
-      HTTP::Client.history.map(&.host).should contain("example.com")
+      expect(HTTP::Client.history.map(&.host)).to contain("example.com")
     end
 
     it "makes an HTTP request with the host meta path" do
       HostMeta::Client.query("example.com")
-      HTTP::Client.history.map(&.path).should contain("/.well-known/host-meta")
+      expect(HTTP::Client.history.map(&.path)).to contain("/.well-known/host-meta")
     end
   end
 end
