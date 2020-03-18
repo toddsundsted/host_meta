@@ -11,7 +11,7 @@ Crystal.
 
 1. Add the dependency to your `shard.yml`:
 
-```
+```yaml
 dependencies:
   host_meta:
     github: toddsundsted/host_meta
@@ -21,7 +21,7 @@ dependencies:
 
 ## Usage
 
-```
+```crystal
 require "host_meta"
 
 h = HostMeta.query("epiktistes.com") # => #<HostMeta::Result:0x10e99...>
