@@ -64,6 +64,15 @@ def with_xml
   yield
 end
 
+def with_no_content_type
+  HTTP::Client.set_next_response(
+    200,
+    HTTP::Headers.new,
+    "{}"
+  )
+  yield
+end
+
 Spectator.describe HostMeta::Client do
   before_each do
     HTTP::Client.clear_history
@@ -91,6 +100,12 @@ Spectator.describe HostMeta::Client do
     it "returns a result" do
       with_xml do
         expect(HostMeta::Client.query("example.com")).to be_a(HostMeta::Result)
+      end
+    end
+
+    it "returns a result" do
+      with_no_content_type do
+        expect(HostMeta::Client.query("acct:foobar@example.com")).to be_a(HostMeta::Result)
       end
     end
 
