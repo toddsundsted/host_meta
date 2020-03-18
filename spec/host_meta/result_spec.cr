@@ -10,7 +10,7 @@ XRD_ENV = <<-XRD
 </XRD>
 XRD
 
-describe HostMeta::Result do
+Spectator.describe HostMeta::Result do
   describe ".from_xml" do
     it "parses an application/xrd+xml result" do
       HostMeta::Result.from_xml("<XRD/>").should be_a(HostMeta::Result)

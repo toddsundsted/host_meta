@@ -64,11 +64,11 @@ def with_xml
   yield
 end
 
-Spec.before_each do
-  HTTP::Client.clear_history
-end
+Spectator.describe HostMeta::Client do
+  before_each do
+    HTTP::Client.clear_history
+  end
 
-describe HostMeta::Client do
   describe ".query" do
     it "raises an error if host doesn't exist" do
       expect_raises(HostMeta::NotFoundError) do
@@ -82,14 +82,14 @@ describe HostMeta::Client do
       end
     end
 
-    with_json do
-      it "returns a result" do
+    it "returns a result" do
+      with_json do
         HostMeta::Client.query("example.com").should be_a(HostMeta::Result)
       end
     end
 
-    with_xml do
-      it "returns a result" do
+    it "returns a result" do
+      with_xml do
         HostMeta::Client.query("example.com").should be_a(HostMeta::Result)
       end
     end

@@ -1,2 +1,3 @@
-require "spec"
-require "../src/host_meta"
+require "../src/*"
+require "spectator"
+require "spectator/should"
