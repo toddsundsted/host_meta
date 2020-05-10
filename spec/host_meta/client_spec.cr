@@ -22,6 +22,8 @@ class HTTP::Client
     url = url.is_a?(String) ? URI.parse(url) : url
     @@history << url
     case url.host
+    when /does-not-exist/
+      raise Socket::Addrinfo::Error.new(LibC::EAI_NONAME, "No address found", url.host)
     when /not-found/
       yield HTTP::Client::Response.new(404)
     when /internal-server-error/
@@ -80,6 +82,12 @@ Spectator.describe HostMeta::Client do
 
   describe ".query" do
     it "raises an error if host doesn't exist" do
+      expect_raises(HostMeta::NotFoundError) do
+        HostMeta::Client.query("does-not-exist.com")
+      end
+    end
+
+    it "raises an error if URL doesn't exist" do
       expect_raises(HostMeta::NotFoundError) do
         HostMeta::Client.query("not-found.com")
       end
