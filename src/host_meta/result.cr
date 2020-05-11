@@ -3,7 +3,7 @@ require "xml"
 
 module HostMeta
   # `Result` error.
-  class ResultError < Exception
+  class ResultError < Error
   end
 
   # A `HostMeta` query result.
