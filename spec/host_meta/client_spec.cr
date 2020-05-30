@@ -24,6 +24,8 @@ class HTTP::Client
     case url.host
     when /does-not-exist/
       raise Socket::Addrinfo::Error.new(LibC::EAI_NONAME, "No address found", url.host)
+    when /redirect/
+      yield HTTP::Client::Response.new(302, headers: HTTP::Headers{"Location" => "https://elsewhere/"})
     when /not-found/
       yield HTTP::Client::Response.new(404)
     when /internal-server-error/
@@ -115,6 +117,11 @@ Spectator.describe HostMeta::Client do
       with_no_content_type do
         expect(HostMeta::Client.query("example.com")).to be_a(HostMeta::Result)
       end
+    end
+
+    it "redirects" do
+      HostMeta::Client.query("redirect")
+      expect(HTTP::Client.history.map(&.host)).to contain("elsewhere")
     end
 
     it "makes an HTTP request to the host domain" do
