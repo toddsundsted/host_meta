@@ -113,7 +113,7 @@ Spectator.describe HostMeta::Client do
 
     it "returns a result" do
       with_no_content_type do
-        expect(HostMeta::Client.query("acct:foobar@example.com")).to be_a(HostMeta::Result)
+        expect(HostMeta::Client.query("example.com")).to be_a(HostMeta::Result)
       end
     end
 
