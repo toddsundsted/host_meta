@@ -9,19 +9,14 @@ module HostMeta
   # A `HostMeta` query result.
   class Result
     class Link
-      JSON.mapping(
-        rel: String,
-        type: String?,
-        template: String?,
-        href: String?
-      )
+      include JSON::Serializable
 
-      def initialize(
-        @rel : String,
-        @type : String?,
-        @template : String?,
-        @href : String?
-      )
+      property rel : String
+      property type : String?
+      property template : String?
+      property href : String?
+
+      def initialize(@rel, @type, @template, @href)
       end
 
       def self.from_xml(xml)
@@ -29,18 +24,13 @@ module HostMeta
       end
     end
 
-    JSON.mapping(
-      properties: Hash(String, String?)?,
-      links: Array(Link)?
-    )
+    include JSON::Serializable
 
-    def initialize(
-      @properties : Hash(String, String?)?,
-      @links : Array(Link)?
-    )
+    property properties : Hash(String, String?)?
+    property links : Array(Link)?
+
+    def initialize(@properties, @links)
     end
-
-    property :properties, :links
 
     def self.from_xml(xml)
       xml = XML.parse(xml).first_element_child
