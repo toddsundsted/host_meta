@@ -6,8 +6,9 @@ module HostMeta
   #     h = HostMeta.query("epiktistes.com") # => #<HostMeta::Result:0x10e99...>
   #     h.links("lrdd").first.template # => "https://epiktistes.com/.well-known/webfinger?resource={uri}"
   #
-  # Raises `HostMeta::NotFoundError` if the host does not
-  # exist. Otherwise, returns `HostMeta::Result`.
+  # Raises `HostMeta::NotFoundError` if the host does not exist and
+  # `HostMeta::RedirectionError` if redirection fails. Otherwise,
+  # returns `HostMeta::Result`.
   #
   def self.query(host)
     HostMeta::Client.query(host)
