@@ -10,8 +10,8 @@ module HostMeta
   # `HostMeta::RedirectionError` if redirection fails. Otherwise,
   # returns `HostMeta::Result`.
   #
-  def self.query(host)
-    HostMeta::Client.query(host)
+  def self.query(host, *args)
+    HostMeta::Client.query(host, *args)
   end
 end
 
