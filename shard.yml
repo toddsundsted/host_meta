@@ -8,7 +8,7 @@ description: |
 authors:
   - Todd Sundsted
 
-crystal: 0.27.2
+crystal: ">= 0.27.2, < 2.0.0"
 
 development_dependencies:
   spectator:
