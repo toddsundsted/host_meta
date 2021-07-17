@@ -23,7 +23,11 @@ class HTTP::Client
     @@history << url
     case url.host
     when /does-not-exist/
-      raise Socket::Addrinfo::Error.new(LibC::EAI_NONAME, "No address found", url.host)
+      {% if compare_versions(Crystal::VERSION, "1.1.0") >= 0 %}
+        raise Socket::Addrinfo::Error.from_os_error(nil, Errno.new(LibC::EAI_NONAME), domain: url.host, type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP, service: 80)
+      {% else %}
+        raise Socket::Addrinfo::Error.new(LibC::EAI_NONAME, "No address found", url.host)
+      {% end %}
     when /redirect/
       yield HTTP::Client::Response.new(302, headers: HTTP::Headers{"Location" => "https://elsewhere/"})
     when /not-found/
